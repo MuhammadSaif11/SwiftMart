@@ -1,0 +1,19 @@
+{
+  "name": "swiftmart",
+  "version": "1.0.0",
+  "description": "SwiftMart is an e-commerce application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MuhammadSaif11/SwiftMart.git"
+  },
+  "author": "Muhammad Saif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MuhammadSaif11/SwiftMart/issues"
+  },
+  "homepage": "https://github.com/MuhammadSaif11/SwiftMart#readme"
+}
