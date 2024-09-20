@@ -1,10 +1,12 @@
 {
   "name": "swiftmart",
+  "type": "module",
   "version": "1.0.0",
   "description": "SwiftMart is an e-commerce application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "SET NODE_ENV=development& nodemon backend/server.js",
+    "prod": "SET NODE_ENV=production& nodemon backend/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/MuhammadSaif11/SwiftMart/issues"
   },
-  "homepage": "https://github.com/MuhammadSaif11/SwiftMart#readme"
+  "homepage": "https://github.com/MuhammadSaif11/SwiftMart#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mongoose": "^8.6.3",
+    "swiftmart": "file:"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.6"
+  }
 }
