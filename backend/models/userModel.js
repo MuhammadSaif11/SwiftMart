@@ -54,6 +54,15 @@ const userSchema = mongoose.Schema(
       public_id: String,
       url: String,
     },
+    loginAttempts: {
+      type: Number,
+      default: 0,
+      select: false,
+    },
+    lockUntil: {
+      type: Date,
+      select: false,
+    },
     active: {
       type: Boolean,
       default: true,
@@ -80,6 +89,15 @@ userSchema.pre(/find/, function (next) {
   this.find({ active: true });
   next();
 });
+
+userSchema.methods.matchPassword = async (candidatePassword, userPassword) =>
+  await bcrypt.compare(candidatePassword, userPassword);
+
+userSchema.methods.passwordChangedAfter = function (jwtIssuedAt) {
+  if (!this.passwordChangedAt) return false;
+  return this.passwordChangedAt > jwtIssuedAt * 1000;
+};
+
 const User = mongoose.model("User", userSchema);
 
 export default User;

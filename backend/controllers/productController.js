@@ -1,5 +1,6 @@
 import Product from "../models/productModel.js";
 import catchAsync from "../utils/catchAsync.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 import ApiFeatures from "../utils/ApiFeatures.js";
 
 export const createProduct = catchAsync(async (req, res, next) => {
@@ -34,9 +35,9 @@ export const getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req?.params?.id);
 
   if (!product)
-    return res.status(404).json({
-      message: "product not found",
-    });
+    return next(
+      new ErrorHandler(`Product not found with id ${req?.params?.id}`, 404)
+    );
 
   res.status(200).json({
     status: "success",
@@ -53,9 +54,9 @@ export const updateProduct = catchAsync(async (req, res, next) => {
   });
 
   if (!product)
-    return res.status(404).json({
-      message: "product not found",
-    });
+    return next(
+      new ErrorHandler(`Product not found with id ${req?.params?.id}`, 404)
+    );
 
   res.status(200).json({
     status: "success",
@@ -69,9 +70,9 @@ export const deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req?.params?.id);
 
   if (!product)
-    return res.status(404).json({
-      message: "product not found",
-    });
+    return next(
+      new ErrorHandler(`Product not found with id ${req?.params?.id}`, 404)
+    );
 
   res.status(204).json({
     status: "success",
