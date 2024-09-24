@@ -13,11 +13,11 @@ const router = express.Router();
 router
   .route("/")
   .post(protect, restrictTo("admin"), createProduct)
-  .get(protect, getAllProducts);
+  .get(getAllProducts);
 
 router
   .route("/:id")
-  .get(protect, getProduct)
+  .get(getProduct)
   .delete(protect, restrictTo("admin"), deleteProduct)
   .patch(protect, restrictTo("admin"), updateProduct);
 

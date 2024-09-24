@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 const userSchema = mongoose.Schema(
   {
@@ -93,9 +94,32 @@ userSchema.pre(/find/, function (next) {
 userSchema.methods.matchPassword = async (candidatePassword, userPassword) =>
   await bcrypt.compare(candidatePassword, userPassword);
 
-userSchema.methods.passwordChangedAfter = function (jwtIssuedAt) {
-  if (!this.passwordChangedAt) return false;
-  return this.passwordChangedAt > jwtIssuedAt * 1000;
+userSchema.methods.passwordChangedAfter = async function (jwtIssuedAt) {
+  const user = await this.constructor
+    .findById(this._id)
+    .select("+passwordChangedAt");
+
+  if (user.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      user.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return changedTimestamp > jwtIssuedAt;
+  }
+  return false;
+};
+
+userSchema.methods.createResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.resetPasswordExpires = Date.now() + 30 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);

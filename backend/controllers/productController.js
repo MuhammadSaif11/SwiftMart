@@ -4,7 +4,9 @@ import ErrorHandler from "../utils/ErrorHandler.js";
 import ApiFeatures from "../utils/ApiFeatures.js";
 
 export const createProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.create(req.body);
+  const prod = { ...req.body, createdBy: req.user._id };
+
+  const product = await Product.create(prod);
 
   res.status(201).json({
     status: "success",
@@ -20,6 +22,7 @@ export const getAllProducts = catchAsync(async (req, res, next) => {
     .sort()
     .select()
     .paginataion();
+
   const products = await apiFilters.query;
 
   res.status(200).json({
@@ -32,7 +35,10 @@ export const getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 export const getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req?.params?.id);
+  const product = await Product.findById(req?.params?.id).populate({
+    path: "createdBy",
+    select: "email role",
+  });
 
   if (!product)
     return next(

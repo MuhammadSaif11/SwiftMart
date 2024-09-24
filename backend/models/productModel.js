@@ -65,10 +65,10 @@ const productSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    creator: {
+    createdBy: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      // required: [false, "A product must belong to a creator"],
+      required: [true, "A product must belong to a creator"],
     },
   },
   {
