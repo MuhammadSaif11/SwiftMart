@@ -22,8 +22,8 @@ const reviewSchema = mongoose.Schema(
     },
   },
   {
-    toObject: { virtual: true },
-    toJSON: { virtual: true },
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
   }
 );
 

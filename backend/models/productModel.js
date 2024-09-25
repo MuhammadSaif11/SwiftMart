@@ -73,8 +73,8 @@ const productSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-    toObject: { virtual: true },
-    toJSON: { virtual: true },
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
   }
 );
 
