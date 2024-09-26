@@ -65,7 +65,7 @@ const orderSchema = mongoose.Schema(
       },
       default: "Processing",
     },
-    deliveredAt: Date,
+    deliveredAt: { type: Date },
   },
   { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } }
 );
@@ -79,7 +79,10 @@ orderSchema.virtual("orderItems", {
 orderSchema.pre(/^find/, function (next) {
   this.populate({
     path: "orderItems",
-    select: "-_id",
+    // select: "order",
+  }).populate({
+    path: "user",
+    select: "name email",
   });
 
   next();

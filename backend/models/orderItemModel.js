@@ -36,13 +36,13 @@ const orderItemSchema = mongoose.Schema(
   }
 );
 
-orderItemSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "product",
-    select: "name price images category",
-  });
-  next();
-});
+// orderItemSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "product",
+//     select: "name price images category",
+//   });
+//   next();
+// });
 
 const OrderItem = mongoose.model("OrderItem", orderItemSchema);
 

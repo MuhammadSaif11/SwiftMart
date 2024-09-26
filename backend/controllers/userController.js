@@ -104,3 +104,4 @@ export const updateUser = catchAsync(async (req, res, next) => {
     },
   });
 });
+

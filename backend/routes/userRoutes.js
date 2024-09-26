@@ -18,6 +18,7 @@ import {
   updateMe,
   updateUser,
 } from "../controllers/userController.js";
+import { getUserOrders } from "../controllers/orderController.js";
 
 const router = express.Router();
 
@@ -35,5 +36,7 @@ router.delete("/deleteMe", protect, deleteMe);
 router.use(protect, restrictTo("admin"));
 router.get("/", getAllUsers);
 router.route("/:id").get(getUser).delete(deleteUser).patch(updateUser);
+
+router.get("/me/orders", protect, getUserOrders);
 
 export default router;

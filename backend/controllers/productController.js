@@ -35,10 +35,14 @@ export const getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 export const getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req?.params?.id).populate({
-    path: "createdBy",
-    select: "email role",
-  });
+  const product = await Product.findById(req?.params?.id)
+    .populate({
+      path: "createdBy",
+      select: "email role",
+    })
+    .populate({
+      path: "reviews",
+    });
 
   if (!product)
     return next(
